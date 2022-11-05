@@ -9,7 +9,7 @@ includelib kernel32.lib
 
  .const
 
-sEnterFirstNumber  			db 'Enter first number in hex: a = 0x'
+sEnterFirstNumber  	db 'Enter first number in hex: a = 0x'
 sEnterSecondNumber    	db 'Enter second number in hex: b = 0x'
 	
 sEnterFirstLen 		db 33d
