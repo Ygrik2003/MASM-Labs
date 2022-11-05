@@ -49,92 +49,91 @@ FlagsChanger 		dw ?
 .code
 
 Main PROC
-	finit
-	invoke 	crt_printf, offset FloatEnterA
-	invoke 	crt_scanf, offset InputFormatFloat, offset CoeffA
-	invoke 	crt_printf, offset FloatEnterB
-	invoke 	crt_scanf, offset InputFormatFloat, offset CoeffB
-	invoke 	crt_printf, offset FloatEnterC
-	invoke 	crt_scanf, offset InputFormatFloat, offset CoeffC
+  finit
+  invoke crt_printf, offset FloatEnterA
+  invoke crt_scanf, offset InputFormatFloat, offset CoeffA
+  invoke crt_printf, offset FloatEnterB
+  invoke crt_scanf, offset InputFormatFloat, offset CoeffB
+  invoke crt_printf, offset FloatEnterC
+  invoke crt_scanf, offset InputFormatFloat, offset CoeffC
 
-	fld 	CoeffA
-	ftst
-	fstsw 	FlagsChanger
-	mov 	ah, BYTE PTR FlagsChanger + 1
-	sahf 	
-	jne 	start
+  fld CoeffA
+  ftst
+  fstsw FlagsChanger
+  mov ah, BYTE PTR FlagsChanger + 1
+  sahf 	
+  jne start
 
-	invoke 	crt_printf, offset NotSquareEquation
-	jmp 	end_proc
+  invoke crt_printf, offset NotSquareEquation
+  jmp end_proc
 
 start:
-	fld 	CoeffB
-	fmul 	CoeffB
-	fld 	CoeffA
-	fmul 	four
-	fmul 	CoeffC ;DWORD PTR
-	fsubrp 	ST(1), ST(0)
-	fchs 	
+  fld CoeffB
+  fmul CoeffB
+  fld CoeffA
+  fmul four
+  fmul CoeffC ;DWORD PTR
+  fsubrp ST(1), ST(0)
+  fchs 	
 
-	ftst  	
-	fstsw 	FlagsChanger
-	mov 	ah, BYTE PTR FlagsChanger + 1
-	sahf
-	jb 		is_imaginary
-	je 		DiscriminantIs0
+  ftst  	
+  fstsw FlagsChanger
+  mov ah, BYTE PTR FlagsChanger + 1
+  sahf
+  jb is_imaginary
+  je DiscriminantIs0
 
-	fsqrt   
+  fsqrt   
 
-	fld		ST(0)
+  fld ST(0)
 
-	
-	fsub 	CoeffB
-	fdiv 	CoeffA
-	fdiv 	two
-	
-	fstp 	root1
-	fchs
-	fsub 	CoeffB
-	fdiv 	CoeffA
-	fdiv 	two
-	fstp 	root2
+  
+  fsub CoeffB
+  fdiv CoeffA
+  fdiv two
+  
+  fstp root1
+  fchs
+  fsub CoeffB
+  fdiv CoeffA
+  fdiv two
+  fstp root2
 
-	invoke 	crt_printf, offset sFormatX1, root1
-	invoke 	crt_printf, offset sFormatX2, root2
-	jmp 	end_proc
+  invoke crt_printf, offset sFormatX1, root1
+  invoke crt_printf, offset sFormatX2, root2
+  jmp end_proc
 
 is_imaginary:
-	fchs 
-	fsqrt
+ fchs 
+ fsqrt
 
-	fld 	ST(0)
+ fld ST(0)
 
-	fdiv 	CoeffA
-	fdiv 	two
-	fabs
-	fstp 	ImSolution
-	
-	fld 	CoeffB
-	fdiv 	CoeffA
-	fdiv 	two
-	fchs
+ fdiv CoeffA
+ fdiv two
+ fabs
+ fstp ImSolution
+ 
+ fld CoeffB
+ fdiv CoeffA
+ fdiv two
+ fchs
+ fstp ReSolution
 
-	fstp 	ReSolution
-
-	invoke 	crt_printf, offset sFormatImX1, ReSolution, ImSolution
-	invoke 	crt_printf, offset sFormatImX2, ReSolution, ImSolution
-	jmp 	end_proc
+ invoke crt_printf, offset sFormatImX1, ReSolution, ImSolution
+ invoke crt_printf, offset sFormatImX2, ReSolution, ImSolution
+ jmp end_proc
 
 DiscriminantIs0:
-	fld 	CoeffB
-	fdiv 	CoeffA
-	fdiv 	two
-	fchs
+  fld CoeffB
+  fdiv CoeffA
+  fdiv two
+  fchs
 
-	fstp 	ReSolution
-	invoke 	crt_printf, offset sFormatX,ReSolution
+  fstp ReSolution
+  invoke crt_printf, offset sFormatX,ReSolution
 end_proc:
-	invoke 	Sleep, 3000
-	invoke 	ExitProcess, 0
+  invoke Sleep, 3000
+  invoke ExitProcess, 0
 Main ENDP
 end Main
