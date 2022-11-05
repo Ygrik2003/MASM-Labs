@@ -12,34 +12,34 @@ includelib kernel32.lib
 sEnterFirstNumber  			db 'Enter first number in hex: a = 0x'
 sEnterSecondNumber    	db 'Enter second number in hex: b = 0x'
 	
-sEnterFirstLen 					db 33d
-sEnterSecondLen 				db 34d
+sEnterFirstLen 		db 33d
+sEnterSecondLen 	db 34d
 
-sAdd 										db 10, 'a + b = 0x'
-sSub 										db 10, 'a - b = 0x'
-sDiv 										db 10, 'a / b = 0x'
-sMul 										db 10, 'a * b = 0x'
-sOperationLen						dd 11
+sAdd 			db 10, 'a + b = 0x'
+sSub 			db 10, 'a - b = 0x'
+sDiv 			db 10, 'a / b = 0x'
+sMul 			db 10, 'a * b = 0x'
+sOperationLen		dd 11
 
-check 									db 'a = %d; b = %d', 10, 0
-							
-maxHexLen								dd 8d
-maxReadHexLen						dd 4d
+check 			db 'a = %d; b = %d', 10, 0
+			
+maxHexLen		dd 8d
+maxReadHexLen		dd 4d
 
-sHexLen 								db 16d
+sHexLen 		db 16d
 
 .data	
-sHex 										db '0123456789ABCDEF'
+sHex 			db '0123456789ABCDEF'
 
 
-buffer 									db 60 dup(?)
+buffer 			db 60 dup(?)
 
-decFirstNumber					dd 0
-decSecondNumber					dd 0
+decFirstNumber		dd 0
+decSecondNumber		dd 0
 
-hexResultNumber					db 8 dup('0')
+hexResultNumber		db 8 dup('0')
 
-countChars		 					dd 0
+countChars		dd 0
 
  .code
 
@@ -65,7 +65,7 @@ go_end:
 HexChar2Dec ENDP
 
 Hex2Dec PROC ;В esi хранится ссылка на строку
-	LOCAL outputInt 				:DWORD
+	LOCAL outputInt 	:DWORD
 	LOCAL digitMultiplier 	:DWORD
 
 	mov eax, maxReadHexLen
@@ -123,8 +123,8 @@ for_num:
 Dec2Hex ENDP
 
 Main PROC
-  LOCAL hStdout 				:DWORD
-  LOCAL hStdin 					:DWORD
+  LOCAL hStdout 	:DWORD
+  LOCAL hStdin 		:DWORD
 
   invoke GetStdHandle, -11
   mov hStdout, eax
