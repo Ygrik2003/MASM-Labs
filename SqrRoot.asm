@@ -46,22 +46,22 @@ counter 			db 0
 .code
 
 getPrecision PROC 
-	fild one
-	xor ecx, ecx
+  fild one
+  xor ecx, ecx
 for_precision:
-	inc cx
-	add counter, 1
-	fmul oneTens
-
-	fcom epsilonNumber
-	fstsw status
-	
-	mov ah, BYTE PTR status + 1
-	sahf
-
-	jae for_precision
-
-	ret
+  inc cx
+  add counter, 1
+  fmul oneTens
+  
+  fcom epsilonNumber
+  fstsw status
+  
+  mov ah, BYTE PTR status + 1
+  sahf
+  
+  jae for_precision
+  
+  ret
 getPrecision ENDP ; Return precision to cx 
 
 Main PROC
@@ -127,7 +127,7 @@ iter:
   invoke crt_printf, offset sFormatI
   
 end_proc:
-
+  invoke Sleep, 10000
   invoke ExitProcess, 0
 Main ENDP
 end Main
